@@ -188,6 +188,10 @@ export declare class Camera extends React.PureComponent<CameraProps> {
      */
     getAvailableVideoCodecs(fileType?: VideoFileType): Promise<CameraVideoCodec[]>;
     /**
+     * Control Torch Enabled 
+     */
+    enableTorch(status: boolean): Promise<void>;
+    /**
      * Get a list of all available camera devices on the current phone.
      *
      * @throws {@linkcode CameraRuntimeError} When any kind of error occured while getting all available camera devices. Use the {@linkcode CameraRuntimeError.code | code} property to get the actual error

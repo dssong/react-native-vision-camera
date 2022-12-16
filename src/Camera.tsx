@@ -314,6 +314,17 @@ export class Camera extends React.PureComponent<CameraProps> {
     }
   }
 
+  /**
+   * Control Torch Enabled 
+   */
+  public async enableTorch(status: boolean): Promise<void> {
+    try {
+      return await CameraModule.enableTorch(this.handle, status);
+    } catch (e) {
+      throw tryParseNativeCameraError(e);
+    }
+  }
+
   //#region Static Functions (NativeModule)
   /**
    * Get a list of all available camera devices on the current phone.

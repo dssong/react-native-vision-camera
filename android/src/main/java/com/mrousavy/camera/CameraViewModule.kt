@@ -417,4 +417,15 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
       promise.reject("NO_ACTIVITY", "No PermissionAwareActivity was found! Make sure the app has launched before calling this function.")
     }
   }
+
+  @ReactMethod
+  fun enableTorch(viewTag: Int, status: Boolean, promise: Promise) {
+    coroutineScope.launch {
+      withPromise(promise) {
+        val view = findCameraView(viewTag)
+        view.enableTorch(status)
+        return@withPromise null
+      }
+    }
+  }
 }
