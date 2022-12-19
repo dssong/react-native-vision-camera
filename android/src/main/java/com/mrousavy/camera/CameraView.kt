@@ -304,6 +304,23 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
   override fun onDetachedFromWindow() {
     super.onDetachedFromWindow()
     updateLifecycleState()
+
+    coroutineScope.launch {
+      destroyOnDetachedFromWindow()
+    }
+  }
+
+  private suspend fun destroyOnDetachedFromWindow() {
+    try {
+      videoCapture = null
+      imageCapture = null
+      imageAnalysis = null
+
+      ProcessCameraProvider.getInstance(reactContext).await()?.unbindAll()
+    } catch (e: Throwable) {
+      Log.e(TAG, "destroyOnDetachedFromWindow() threw: ${e.message}")
+      invokeOnError(e)
+    }
   }
 
   /**
