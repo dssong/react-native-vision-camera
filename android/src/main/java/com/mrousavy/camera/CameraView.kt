@@ -304,6 +304,15 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
   override fun onDetachedFromWindow() {
     super.onDetachedFromWindow()
     updateLifecycleState()
+
+    coroutineScope.launch {
+      try {
+        configureSession()
+      } catch (e: Throwable) {
+        Log.e(TAG, "onDetachedFromWindow() threw: ${e.message}")
+        invokeOnError(e)
+      }
+    }
   }
 
   /**
